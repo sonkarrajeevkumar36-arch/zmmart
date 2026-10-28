@@ -1,0 +1,6 @@
+{
+  "name": "Zypsomart - Fast Grocery & Essentials",
+  "description": "Fast 20-minute grocery delivery app with bilingual English/Hindi support, AI-generated seasonal festive offer banners, real-time order tracking, and seamless return management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

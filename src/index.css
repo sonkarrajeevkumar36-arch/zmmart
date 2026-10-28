@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --theme-primary: #16a34a;
+  --theme-primary-hover: #15803d;
+  --theme-primary-light: #f0fdf4;
+  --theme-primary-border: #bbf7d0;
+  --theme-primary-text: #166534;
+  --theme-gradient-from: #16a34a;
+  --theme-gradient-to: #15803d;
+  --theme-accent: #f59e0b;
+  --theme-shadow: rgba(22, 163, 74, 0.25);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    background-color: #f8fafc;
+  }
+
+  /* Prevent automatic iOS zooming on inputs while maintaining clean sizing */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, textarea, select {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Dynamic theme utilities that adapt to the active banner theme */
+.bg-theme-primary {
+  background-color: var(--theme-primary) !important;
+}
+.hover\:bg-theme-primary-hover:hover {
+  background-color: var(--theme-primary-hover) !important;
+}
+.text-theme-primary {
+  color: var(--theme-primary) !important;
+}
+.text-theme-dark {
+  color: var(--theme-primary-text) !important;
+}
+.bg-theme-light {
+  background-color: var(--theme-primary-light) !important;
+}
+.border-theme-primary {
+  border-color: var(--theme-primary) !important;
+}
+.border-theme-light {
+  border-color: var(--theme-primary-border) !important;
+}
+.theme-gradient {
+  background: linear-gradient(135deg, var(--theme-gradient-from), var(--theme-gradient-to)) !important;
+}
+.theme-shadow {
+  box-shadow: 0 10px 15px -3px var(--theme-shadow), 0 4px 6px -4px var(--theme-shadow) !important;
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
