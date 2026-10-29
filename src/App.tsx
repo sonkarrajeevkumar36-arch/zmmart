@@ -1046,9 +1046,10 @@ export default function App() {
 
     // Flow 2: PAY ONLINE VIA OFFICIAL RAZORPAY CHECKOUT
     try {
-      // 1. Call server-side Cloudflare Pages Function to create official order on Razorpay
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+      // 1. Call server-side API endpoint to create official order on Razorpay
       const token = currentUser ? await currentUser.getIdToken().catch(() => '') : '';
-      const createRes = await fetch('/api/create-razorpay-order', {
+      const createRes = await fetch(`${apiBase}/api/create-razorpay-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1092,8 +1093,8 @@ export default function App() {
             title: lang === 'hi' ? 'कैश ऑन डिलीवरी उपलब्ध है' : 'Cash on Delivery Available',
             message:
               lang === 'hi'
-                ? `ऑनलाइन पेमेंट गेटवे सेटअप प्रक्रिया में है${missingDetail}। Cloudflare Pages Secrets में RAZORPAY_KEY_ID और RAZORPAY_KEY_SECRET जोड़कर Redeploy करें।\n\nआप तुरंत "कैश ऑन डिलीवरी" से बिना किसी अतिरिक्त शुल्क के अपना ऑर्डर बुक कर सकते हैं।`
-                : `Online payment gateway keys are not configured in Cloudflare Pages${missingDetail}. Please add them in Cloudflare Pages Environment Variables and redeploy.\n\nYou can place your order instantly with Cash on Delivery.`,
+                ? `ऑनलाइन पेमेंट गेटवे सेटअप प्रक्रिया में है${missingDetail}। Vercel या Cloudflare Environment Variables में RAZORPAY_KEY_ID और RAZORPAY_KEY_SECRET जोड़कर Redeploy करें।\n\nआप तुरंत "कैश ऑन डिलीवरी" से बिना किसी अतिरिक्त शुल्क के अपना ऑर्डर बुक कर सकते हैं।`
+                : `Online payment gateway keys are not configured in Vercel/Cloudflare Environment Variables${missingDetail}. Please add them and redeploy.\n\nYou can place your order instantly with Cash on Delivery.`,
             confirmText: lang === 'hi' ? 'कैश ऑन डिलीवरी से ऑर्डर करें' : 'Use Cash on Delivery',
             onConfirm: () => {
               setPaymentMethod('cod');
@@ -1136,7 +1137,7 @@ export default function App() {
 
         try {
           // Verify cryptographic HMAC-SHA256 signature on server
-          const verifyRes = await fetch('/api/verify-payment', {
+          const verifyRes = await fetch(`${apiBase}/api/verify-payment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1253,9 +1254,38 @@ export default function App() {
           color: '#16a34a'
         },
         modal: {
+          confirm_close: true,
           ondismiss: () => {
             setIsPlacingOrder(false);
             isProcessingPaymentRef.current = false;
+          }
+        },
+        // Prioritize UPI QR Code, UPI Apps, and Account-Enabled Methods
+        config: {
+          display: {
+            blocks: {
+              upi: {
+                name: 'Pay with UPI / Dynamic QR Code',
+                instruments: [
+                  {
+                    method: 'upi',
+                    flows: ['qr', 'intent', 'collect']
+                  }
+                ]
+              },
+              cards: {
+                name: 'Cards & Other Options',
+                instruments: [
+                  { method: 'card' },
+                  { method: 'netbanking' },
+                  { method: 'wallet' }
+                ]
+              }
+            },
+            sequence: ['block.upi', 'block.cards'],
+            preferences: {
+              show_default_blocks: true
+            }
           }
         },
         handler: (paymentResponse: {

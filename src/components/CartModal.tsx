@@ -251,10 +251,10 @@ export function CartModal({
                             </div>
                             <div>
                               <span className="text-xs font-black text-slate-900 block leading-tight">
-                                {lang === 'hi' ? 'ऑनलाइन भुगतान (Razorpay)' : 'Pay Online (Razorpay)'}
+                                {lang === 'hi' ? 'ऑनलाइन भुगतान (UPI / QR / कार्ड्स)' : 'Pay Online (UPI / QR / Cards)'}
                               </span>
                               <span className="text-[10px] font-bold text-green-700">
-                                UPI • Cards • NetBanking
+                                UPI • Dynamic QR • Cards • NetBanking
                               </span>
                             </div>
                           </div>
@@ -264,7 +264,7 @@ export function CartModal({
                         </div>
                         <div className="flex items-center gap-1.5 text-[10px] text-slate-500 pt-1 border-t border-slate-100/80">
                           <Lock className="w-3 h-3 text-green-600 shrink-0" />
-                          <span className="truncate">Google Pay • PhonePe • Paytm • Cards</span>
+                          <span className="truncate">GPay • PhonePe • QR Code • Cards</span>
                         </div>
                       </button>
                     )}

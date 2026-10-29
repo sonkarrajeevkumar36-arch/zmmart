@@ -1357,27 +1357,27 @@ export function AdminModal({
                   {/* Environment Secrets Checklist */}
                   <div className="bg-slate-900 p-3.5 rounded-xl border border-slate-700 text-xs space-y-2">
                     <p className="font-bold text-slate-300 text-[11px] uppercase tracking-wider">
-                      Required Cloudflare Pages Secrets:
+                      Required Vercel / Cloudflare Environment Variables:
                     </p>
                     <div className="space-y-1.5 text-[11px] text-slate-400 font-mono">
                       <div className="flex items-center gap-2">
                         <span className="text-green-400 font-bold">✓</span>
                         <span className="text-slate-200">RAZORPAY_KEY_ID</span>
-                        <span className="text-slate-500 font-sans">(Public Live Key)</span>
+                        <span className="text-slate-500 font-sans">(Public Live Key ID)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-400 font-bold">✓</span>
                         <span className="text-slate-200">RAZORPAY_KEY_SECRET</span>
-                        <span className="text-slate-500 font-sans">(Encrypted Secret)</span>
+                        <span className="text-slate-500 font-sans">(Encrypted Live Key Secret)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-green-400 font-bold">✓</span>
                         <span className="text-slate-200">RAZORPAY_WEBHOOK_SECRET</span>
-                        <span className="text-slate-500 font-sans">(Webhook Signature Secret)</span>
+                        <span className="text-slate-500 font-sans">(Optional Webhook Secret)</span>
                       </div>
                     </div>
                     <p className="text-[10px] text-slate-400 pt-1 font-sans">
-                      All secrets are securely accessed inside <code className="text-amber-300">functions/api/*</code> and never exposed to the client browser.
+                      All secrets are securely accessed inside <code className="text-amber-300">/api/*</code> (Vercel) and <code className="text-amber-300">functions/api/*</code> (Cloudflare Pages) and never exposed to the client.
                     </p>
                   </div>
                 </div>
